@@ -7,6 +7,14 @@ const ProdutoController = {
     try {
       const produtos = await Produtos.findAll();
 
+      for (var pos in produtos) {
+        if (produtos.hasOwnProperty(pos)) {
+            const { nome } = await Categorias.findByPk(produtos[pos].categoria)
+           produtos[pos].categoria = nome;
+        }
+      }
+      
+
       return res.json(produtos);
     } catch (error) {
       return res.status(500).json("Algo errado aconteceu, chame o batman!");
