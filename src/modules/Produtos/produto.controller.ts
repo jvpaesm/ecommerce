@@ -7,12 +7,6 @@ const ProdutoController = {
     try {
       const produtos = await Produtos.findAll();
 
-      produtos.forEach(async (item: string | number) => {
-        const { nome } = await Categorias.findByPk(JSON.parse(produtos[item].categoria))
-        produtos[item].categoria = nome
-      });
-
-      console.log(produtos[0].categoria)
       return res.json(produtos);
     } catch (error) {
       return res.status(500).json("Algo errado aconteceu, chame o batman!");
