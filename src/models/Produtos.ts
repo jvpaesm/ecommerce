@@ -23,7 +23,7 @@ const Produtos = db.define(
         type: DataTypes.STRING,
     },
     categoria: [{
-        type: DataTypes.NUMBER,
+        type: DataTypes.INTEGER,
         references: {
             model: Categorias,
             key: "id"
