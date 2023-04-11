@@ -3,10 +3,11 @@ import Categorias from "./Categorias"
 import Produtos from "./Produtos"
 import Pedidos from "./Pedidos"
 import DetalhesPedido from "./DetalhesPedido"
+import Cupons from "./Cupons"
 
 Categorias.hasMany(Produtos, { foreignKey: "categoria" })
 Usuarios.hasMany(Pedidos, { foreignKey: "usuario_id" })
-
+Cupons.hasMany(Pedidos, { foreignKey: "cupom"})
 
 Produtos.belongsToMany(Pedidos, {
     foreignKey: "produto_id",
@@ -27,4 +28,5 @@ export {
     Categorias,
     Pedidos,
     DetalhesPedido,
+    Cupons,
 }

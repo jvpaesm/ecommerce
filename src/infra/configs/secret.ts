@@ -1,4 +1,4 @@
 export default {
-    key: "desafiofinal",
+    key: process.env.SECRET_KEY as string
   };
   

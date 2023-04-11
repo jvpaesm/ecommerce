@@ -6,6 +6,8 @@ import authRoutes from './modules/Auth/routes'
 import categoriaRoutes from './modules/Categorias/routes'
 import produtoRoutes from './modules/Produtos/routes'
 import path from 'path'
+import pedidosRoutes from './modules/Pedidos/routes'
+import cuponsRoutes from './modules/Cupons/routes'
 
 
 export const app = express()
@@ -16,6 +18,8 @@ app.use(express.static(path.resolve('public')))
 app.use(cors())
 app.use(usuarioRoutes)
 app.use(categoriaRoutes)
+app.use(pedidosRoutes)
 app.use(produtoRoutes)
+app.use(cuponsRoutes)
 app.use(authRoutes)
 db.hasConection()

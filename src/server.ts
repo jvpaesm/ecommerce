@@ -1,4 +1,5 @@
 import { app } from './app'
+require('dotenv').config()
 
 const porta = process.env.PORT || 3000
 

@@ -4,6 +4,7 @@ import secret from "../../infra/configs/secret";
 import bcrypt from "bcryptjs";
 import { Request, Response } from "express";
 
+
 const AuthController = {
   async login(req: Request, res: Response) {
     const { email, senha } = req.body;

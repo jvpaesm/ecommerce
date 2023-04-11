@@ -12,15 +12,34 @@ const ProdutoController = {
         if (produtos.hasOwnProperty(pos)) {
             const { nome } = await Categorias.findByPk(produtos[pos].categoria)
            produtos[pos].categoria = nome;
-           produtos[pos].foto = "/imagens/" + produtos[pos].foto
+           produtos[pos].foto = "http://localhost:3000/imagens/" + produtos[pos].foto
        }
       }
 
       return res.json(produtos);
     } catch (error) {
-      return res.status(500).json("Algo errado aconteceu, chame o batman!");
+      return res.status(500).json("Algo errado aconteceu, chame ajuda!");
     }
   },
+
+  async getByCategory(req: Request, res:Response){
+    try {
+      const { id } = req.params
+
+      const produtos = await Categorias.findAll({
+        where: { id },
+        include: [
+        {
+            model: Produtos
+        }
+    ]
+    })
+   return res.status(201).json(produtos);
+    } catch (error) {
+      return res.status(500).json("Algo errado aconteceu, chame ajuda!");
+    }
+  },
+
   async getOne(req: Request, res: Response) {
     try {
       const { id } = req.params;
@@ -33,7 +52,7 @@ const ProdutoController = {
 
       return res.json(produto);
     } catch (error) {
-      return res.status(500).json("Algo errado aconteceu, chame o batman!");
+      return res.status(500).json("Algo errado aconteceu, chame ajuda!");
     }
   },
   async create(req: Request, res: Response) {
@@ -49,26 +68,31 @@ const ProdutoController = {
 
       return res.status(201).json(newProduto);
     } catch (error) {
-      return res.status(500).json("Algo errado aconteceu, chame o batman!");
+      return res.status(500).json("Algo errado aconteceu, chame ajuda!");
     }
   },
   
   async update(req: Request, res: Response) {
     try {
       const { id } = req.params;
+      //const { nome, preco, descricao, categoria } = req.body
+      const file = req.file;
+      
       const payloadUpdate = {};
 
-      Object.assign(payloadUpdate, req.body);
+      Object.assign(payloadUpdate,req.body,{foto: file?.filename})
+    
+  
+         await Produtos.update(payloadUpdate,{
+          where: { id }
+         })
 
-      await Produtos.update(payloadUpdate, {
-        where: { id },
-      });
+      const produto = await Produtos.findByPk(id);
 
-      const produtos = await Produtos.findByPk(id);
-
-      return res.status(200).json(produtos);
+      return res.status(200).json(produto);
     } catch (error) {
-      return res.status(500).json("Algo errado aconteceu, chame o batman!");
+      console.log(error)
+      return res.status(500).json("Algo errado aconteceu, chame ajuda!");
     }
   },
   

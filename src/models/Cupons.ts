@@ -1,9 +1,8 @@
 import db from "../infra/database";
 import { DataTypes } from "sequelize";
 
-
-const Categorias = db.define(
-  "Categorias",
+const Cupons = db.define(
+  "Cupons",
   {
     id: {
       type: DataTypes.INTEGER,
@@ -13,6 +12,9 @@ const Categorias = db.define(
     nome: {
       type: DataTypes.STRING,
     },
+    desconto: {
+        type: DataTypes.INTEGER,
+      },
     createdAt: {
       type: DataTypes.DATE,
     },
@@ -21,9 +23,9 @@ const Categorias = db.define(
     },
   },
   {
-    tableName: "categorias",
+    tableName: "cupons",
     timestamps: true
   }
 );
 
-export default Categorias;
+export default Cupons;

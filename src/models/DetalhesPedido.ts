@@ -20,6 +20,9 @@ const DetalhesPedido = db.define(
         key: "id"
     }     
     },
+    quantidade: {
+      type: DataTypes.INTEGER,
+    },
     createdAt: {
       type: DataTypes.DATE,
     },

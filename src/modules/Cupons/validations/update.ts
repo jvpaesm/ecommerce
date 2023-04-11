@@ -6,8 +6,6 @@ export default validate({
   }),
   body: Joi.object({
     nome: Joi.string(),
-    preco: Joi.number(),
-    descricao: Joi.string(),
-    categoria: Joi.number(),
+    desconto: Joi.number(),
   }),
 });

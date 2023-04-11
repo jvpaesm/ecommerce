@@ -1,17 +1,10 @@
+import dbConfig from "../configs/dbConfig";
 const Sequelize = require("sequelize")
-
-const DB_NAME = "ecommerce";
-const DB_USER = "root";
-const DB_PASS = "cdIldXYiTd1@";
-const DB_CONFIG = {
-  dialect: "mysql",
-  host: "localhost",
-  port: 3306,
-};
+require('dotenv').config()
 
 // objeto para guardar a conexão do banco dados
 
-let db = new Sequelize(DB_NAME, DB_USER, DB_PASS, DB_CONFIG);
+let db = new Sequelize(process.env.DB_NAME, process.env.DB_USER, process.env.DB_PASS, dbConfig);
 
 
 async function hasConection() {

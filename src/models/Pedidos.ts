@@ -1,6 +1,7 @@
 import db from "../infra/database";
 import { DataTypes } from "sequelize";
 import Usuarios from "./Usuarios";
+import Cupons from "./Cupons";
 
 const Pedidos = db.define(
   "Pedidos",
@@ -16,6 +17,13 @@ const Pedidos = db.define(
             model: Usuarios,
             key: "id"
         }
+      },
+    cupom: {
+        type: DataTypes.STRING,
+        references: {
+          model: Cupons,
+          key: "nome"
+      }
       },
     valor: {
         type: DataTypes.INTEGER,
