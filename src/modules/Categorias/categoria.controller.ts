@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { Categorias } from "../../models";
+import { Categorias, Produtos } from "../../models";
 
 
 const CategoriaController = {
@@ -9,7 +9,7 @@ const CategoriaController = {
 
       return res.json(categorias);
     } catch (error) {
-      return res.status(500).json("Algo errado aconteceu, chame o batman!");
+      return res.status(500).json("Algo errado aconteceu, chame ajuda!");
     }
   },
   async getOne(req: Request, res: Response) {
@@ -19,7 +19,7 @@ const CategoriaController = {
 
       return res.json(categoria);
     } catch (error) {
-      return res.status(500).json("Algo errado aconteceu, chame o batman!");
+      return res.status(500).json("Algo errado aconteceu, chame ajuda!");
     }
   },
   async create(req: Request, res: Response) {
@@ -30,7 +30,7 @@ const CategoriaController = {
 
       return res.status(201).json(newCategoria);
     } catch (error) {
-      return res.status(500).json("Algo errado aconteceu, chame o batman!");
+      return res.status(500).json("Algo errado aconteceu, chame ajuda!");
     }
   },
   
@@ -49,7 +49,29 @@ const CategoriaController = {
 
       return res.status(200).json(categorias);
     } catch (error) {
-      return res.status(500).json("Algo errado aconteceu, chame o batman!");
+      return res.status(500).json("Algo errado aconteceu, chame ajuda!");
+    }
+  },
+  async delete(req: Request, res: Response){
+    try {
+      const { id } = req.params
+      const possuiProdutos = await Produtos.count({
+        where: {
+          categoria: id,
+        }
+      })
+      if(possuiProdutos){
+        return res.status(401).json("Existe produtos associados a essa categoria, não é possivel deletar!");
+      }
+      await Categorias.destroy({
+        where: {
+          id,
+        },
+      });
+      return res.sendStatus(204);
+
+    } catch (error) {
+      return res.status(500).json("Algo errado aconteceu, chame ajuda!");
     }
   },
   

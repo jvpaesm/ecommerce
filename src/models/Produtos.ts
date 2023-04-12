@@ -17,7 +17,7 @@ const Produtos = db.define(
         type: DataTypes.STRING,
     },
     preco: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.FLOAT,
     },
     descricao: {
         type: DataTypes.STRING,

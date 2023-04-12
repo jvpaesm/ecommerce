@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { Cupons } from "../../models";
+import { Cupons, Pedidos } from "../../models";
 
 
 const CuponsController = {
@@ -48,6 +48,32 @@ const CuponsController = {
       const cupons = await Cupons.findByPk(id);
 
       return res.status(200).json(cupons);
+    } catch (error) {
+      return res.status(500).json("Algo errado aconteceu, chame ajuda!");
+    }
+  },
+  async delete(req:Request,res:Response){
+    try {
+      const { id } = req.params
+      const { nome } = await Cupons.findByPk(id)
+      const possuiPedidos = await Pedidos.count({
+      where: {
+        cupom: nome,
+      },
+    })
+    if (possuiPedidos) {
+      return res
+        .status(401)
+        .json(
+          "Existe pedidos associados a esse cupom, não é possivel deletar!"
+        );
+    }
+    await Cupons.destroy({
+      where: {
+        id,
+      },
+    });
+    return res.sendStatus(204);
     } catch (error) {
       return res.status(500).json("Algo errado aconteceu, chame ajuda!");
     }

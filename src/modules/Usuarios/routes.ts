@@ -12,5 +12,6 @@ usuarioRoutes.get("/usuarios/:id",Auth.verifyAdmin,UsuarioValidation.getOne,Usua
 usuarioRoutes.post("/usuarios",UsuarioValidation.create, UsuarioController.create);
 usuarioRoutes.post("/usuariosadmin",Auth.verifyAdmin, UsuarioValidation.create, UsuarioController.createAdmin);
 usuarioRoutes.put("/usuarios/:id",Auth.verifyUser,UsuarioValidation.update,UsuarioController.update);
+usuarioRoutes.delete("/usuarios/:id",Auth.verifyUser,UsuarioValidation.destroy,UsuarioController.delete)
 
 export default usuarioRoutes;

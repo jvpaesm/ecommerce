@@ -20,7 +20,7 @@ const AuthController = {
     }
 
     if (!bcrypt.compareSync(senha, usuario.senha)) {
-      return res.status(401).json("Senha invalida!");
+      return res.status(401).json("Usuário ou senha invalida!");
     }
 
     const payload = {

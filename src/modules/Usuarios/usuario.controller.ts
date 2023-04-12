@@ -1,4 +1,4 @@
-import { Usuarios } from "../../models/";
+import { Pedidos, Usuarios } from "../../models/";
 import { Request, Response } from "express";
 import bcrypt from "bcryptjs";
 const UsuarioController = {
@@ -74,6 +74,34 @@ const UsuarioController = {
       return res.status(200).json(usuarios);
     } catch (error) {
       return res.status(500).json("Algo errado aconteceu, chame o batman!");
+    }
+  },
+
+  async delete(req:Request,res:Response){
+    try {
+      const { id } = req.params
+      const possuiPedidos = await Pedidos.count({
+        where: {
+          usuario_id: id,
+        },
+      });
+      if (possuiPedidos) {
+        return res
+          .status(401)
+          .json(
+            "Existe pedidos associados a esse usuário, não é possivel deletar!"
+          );
+      }
+      await Usuarios.destroy({
+        where: {
+          id,
+        },
+      });
+
+      return res.sendStatus(204);
+
+    } catch (error) {
+      return res.status(500).json("Algo errado aconteceu, chame ajuda!");
     }
   },
   

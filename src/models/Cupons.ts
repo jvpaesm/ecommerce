@@ -13,7 +13,7 @@ const Cupons = db.define(
       type: DataTypes.STRING,
     },
     desconto: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.FLOAT,
       },
     createdAt: {
       type: DataTypes.DATE,

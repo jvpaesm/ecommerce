@@ -26,7 +26,7 @@ const Pedidos = db.define(
       }
       },
     valor: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.FLOAT,
       },
     createdAt: {
         type: DataTypes.DATE,

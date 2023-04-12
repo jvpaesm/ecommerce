@@ -12,5 +12,6 @@ produtoRoutes.get("/produtoscategoria/:id",ProdutoValidation.getOne,ProdutoContr
 produtoRoutes.get("/produtos/:id",ProdutoValidation.getOne,ProdutoController.getOne);
 produtoRoutes.post("/produtos",Auth.verifyAdmin,upload.single('foto'),ProdutoValidation.create, ProdutoController.create);
 produtoRoutes.put("/produtos/:id",Auth.verifyAdmin,upload.single('foto'),ProdutoValidation.update,ProdutoController.update);
+produtoRoutes.delete("/produtos/:id",Auth.verifyAdmin,ProdutoValidation.destroy,ProdutoController.delete)
 
 export default produtoRoutes;

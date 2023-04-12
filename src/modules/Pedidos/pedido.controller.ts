@@ -122,6 +122,39 @@ const PedidoController = {
         }
     },
 
+    async delete(req:Request,res:Response){
+       
+       try {
+        const { id } = req.params
+
+        const possuiDetalhes = await DetalhesPedido.count({
+            where: {
+                pedido_id: id,
+              },
+        })
+        console.log(possuiDetalhes)
+
+        if(possuiDetalhes == 0){
+            return res.status(404).json("Pedido não encontrado")
+        }
+        await DetalhesPedido.destroy({
+            where: {
+                pedido_id: id,
+              },
+        })
+        await Pedidos.destroy({
+            where: {
+                id,
+              },
+        })
+        return res.sendStatus(204);
+       } catch (error) {
+        return res.status(500).json("Algo errado aconteceu, chame ajuda!");
+       }
+        
+
+    }
+
 };
 
 export default PedidoController;

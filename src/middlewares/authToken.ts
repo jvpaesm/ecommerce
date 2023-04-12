@@ -7,7 +7,7 @@ function verifyUser( req:Request, res:Response, next:NextFunction) {
   const authHeader = req.headers['authorization']
   const token = authHeader && authHeader.split(' ')[1]
 
-  if(!token) return res.status(400).json("Token não encontrado");
+  if(!token) return res.status(401).json("Token não encontrado");
 
   try {
     jwt.verify(token, secret.key)
@@ -22,14 +22,14 @@ function verifyAdmin(req:Request,res:Response,next:NextFunction) {
   const authHeader = req.headers['authorization']
   const token = authHeader && authHeader.split(' ')[1]
 
-  if(!token) return res.status(400).json("Token não encontrado");
+  if(!token) return res.status(401).json("Token não encontrado");
 
   try {
 
     const payload = jwt.verify(token, secret.key)
     
     if(payload.tipo != "admin"){
-      return res.status(400).json("Usuário não credenciado");
+      return res.status(401).json("Usuário não credenciado");
     }
     next()
   } catch (error) {
@@ -42,11 +42,11 @@ function getToken(req:Request, res:Response){
   const authHeader = req.headers['authorization']
   const token = authHeader && authHeader.split(' ')[1]
 
-  if(!token) return res.status(400).json("Token não encontrado");
+  if(!token) return res.status(401).json("Token não encontrado");
 
   try {
     const payload = jwt.verify(token, secret.key)
-    if(!payload) return res.status(400).json("Usuario não encontrado")
+    if(!payload) return res.status(401).json("Usuario não encontrado")
     
     const { senha: _, ...usuarioLogado } = payload
     return usuarioLogado

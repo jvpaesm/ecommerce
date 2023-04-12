@@ -1,5 +1,5 @@
 import { Request, Response, raw } from "express";
-import { Categorias, Produtos } from "../../models";
+import { Categorias, DetalhesPedido, Pedidos, Produtos } from "../../models";
 
 
 const ProdutoController = {
@@ -47,7 +47,7 @@ const ProdutoController = {
       
       const { nome } = await Categorias.findByPk(produto.categoria)
       produto.categoria = nome
-      produto.foto = "/imagens/" + produto.foto
+      produto.foto = "http://localhost:3000/imagens/" + produto.foto
 
 
       return res.json(produto);
@@ -75,7 +75,6 @@ const ProdutoController = {
   async update(req: Request, res: Response) {
     try {
       const { id } = req.params;
-      //const { nome, preco, descricao, categoria } = req.body
       const file = req.file;
       
       const payloadUpdate = {};
@@ -94,6 +93,36 @@ const ProdutoController = {
       console.log(error)
       return res.status(500).json("Algo errado aconteceu, chame ajuda!");
     }
+  },
+
+  async delete(req:Request,res:Response){
+
+    try {
+      const { id } = req.params
+    const possuiPedidos = await DetalhesPedido.count({
+      where: {
+        produto_id: id,
+      },
+    })
+    if (possuiPedidos) {
+      return res
+        .status(401)
+        .json(
+          "Existe pedidos associados a esse produto, não é possivel deletar!"
+        );
+    }
+    await Produtos.destroy({
+      where: {
+        id,
+      },
+    });
+
+    return res.sendStatus(204);
+    } catch (error) {
+      return res.status(500).json("Algo errado aconteceu, chame ajuda!");
+    }
+    
+
   },
   
 };
