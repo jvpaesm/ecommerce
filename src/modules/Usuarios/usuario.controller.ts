@@ -8,7 +8,7 @@ const UsuarioController = {
 
       return res.json(usuarios);
     } catch (error) {
-      return res.status(500).json("Algo errado aconteceu, chame o batman!");
+      return res.status(500).json("Algo errado aconteceu, chame ajuda!");
     }
   },
   async getOne(req: Request, res: Response) {
@@ -18,7 +18,7 @@ const UsuarioController = {
 
       return res.json(usuario);
     } catch (error) {
-      return res.status(500).json("Algo errado aconteceu, chame o batman!");
+      return res.status(500).json("Algo errado aconteceu, chame ajuda!");
     }
   },
   async create(req: Request, res: Response) {
@@ -34,7 +34,7 @@ const UsuarioController = {
 
       return res.status(201).json(newUsuario);
     } catch (error) {
-      return res.status(500).json("Algo errado aconteceu, chame o batman!");
+      return res.status(500).json("Algo errado aconteceu, chame ajuda!");
     }
   },
   async createAdmin(req: Request, res: Response) {
@@ -49,7 +49,7 @@ const UsuarioController = {
       });
       return res.status(201).json(newUsuario)
     } catch (error) {
-      return res.status(500).json("Algo errado aconteceu, chame o batman!");
+      return res.status(500).json("Algo errado aconteceu, chame ajuda!");
     }
   },
   async update(req: Request, res: Response) {
@@ -73,7 +73,7 @@ const UsuarioController = {
 
       return res.status(200).json(usuarios);
     } catch (error) {
-      return res.status(500).json("Algo errado aconteceu, chame o batman!");
+      return res.status(500).json("Algo errado aconteceu, chame ajuda!");
     }
   },
 

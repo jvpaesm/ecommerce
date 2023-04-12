@@ -99,7 +99,7 @@ const ProdutoController = {
 
     try {
       const { id } = req.params
-    const possuiPedidos = await DetalhesPedido.count({
+      const possuiPedidos = await DetalhesPedido.count({
       where: {
         produto_id: id,
       },
