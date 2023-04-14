@@ -33,6 +33,19 @@ CREATE TABLE `produtos` (
   CONSTRAINT `produto_categoria` FOREIGN KEY (`categoria`) REFERENCES `categorias` (`id`)
 );
 
+
+CREATE TABLE `cupons` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `nome` varchar(45) NOT NULL,
+  `desconto` float NOT NULL,
+  `createdAt` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `updatedAt` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `nome_UNIQUE` (`nome`)
+);
+
+
+
 CREATE TABLE `pedidos` (
   `id` int NOT NULL AUTO_INCREMENT,
   `usuario_id` int NOT NULL,
@@ -57,14 +70,5 @@ CREATE TABLE `detalhespedido` (
   KEY `detalhe_produto` (`produto_id`),
   CONSTRAINT `detalhe_pedido` FOREIGN KEY (`pedido_id`) REFERENCES `pedidos` (`id`),
   CONSTRAINT `detalhe_produto` FOREIGN KEY (`produto_id`) REFERENCES `produtos` (`id`)
-);
-
-CREATE TABLE `cupons` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `nome` varchar(45) NOT NULL,
-  `desconto` float NOT NULL,
-  `createdAt` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `updatedAt` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`)
 );
 
