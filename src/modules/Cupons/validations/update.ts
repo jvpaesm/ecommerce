@@ -5,7 +5,7 @@ export default validate({
     id: Joi.number().required(),
   }),
   body: Joi.object({
-    nome: Joi.string(),
     desconto: Joi.number(),
+    descontoporcentagem: Joi.boolean(),
   }),
 });

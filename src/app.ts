@@ -8,6 +8,8 @@ import produtoRoutes from './modules/Produtos/routes'
 import path from 'path'
 import pedidosRoutes from './modules/Pedidos/routes'
 import cuponsRoutes from './modules/Cupons/routes'
+import handleError from './middlewares/handleError'
+
 
 
 export const app = express()
@@ -22,4 +24,5 @@ app.use(pedidosRoutes)
 app.use(produtoRoutes)
 app.use(cuponsRoutes)
 app.use(authRoutes)
+app.use(handleError)
 db.hasConection()

@@ -9,10 +9,18 @@ const PedidoController = {
             const pedidos = await Pedidos.findAll({
                 include: [
                 {
-                    model: Produtos
+                    model: Produtos,
                 }
             ]
             })
+
+
+           for(var i=0; i<pedidos.length;i++){
+            for(var k=0; k<pedidos[i].Produtos.length;k++){
+                pedidos[i].Produtos[k].foto = "http://localhost:3000/imagens/" + pedidos[i].Produtos[k].foto
+            }
+           }
+
             return res.status(201).json(pedidos)
             
         } catch (error) {
@@ -28,10 +36,38 @@ const PedidoController = {
                 where: {id: id},
                 include: [
                 {
-                    model: Produtos
-                }
-            ]
+                    model: Produtos,
+                },
+            ],
+
             })
+            for (var pos in pedidos.Produtos) {
+                if (pedidos.Produtos.hasOwnProperty(pos)) {
+                  pedidos.Produtos[pos].foto = "http://localhost:3000/imagens/" + pedidos.Produtos[pos].foto;
+                }
+              }
+            return res.status(201).json(pedidos)
+        } catch (error) {
+            return res.status(500).json("Algo errado aconteceu, chame ajuda");
+        }
+    },
+    async getAllByid(req: Request, res:Response){
+        try {
+            const { id } = req.params;
+            const pedidos = await Pedidos.findAll({
+                where: {usuario_id: id},
+                include: [
+                {
+                    model: Produtos,
+                },
+            ],
+
+            })
+            for (var pos in pedidos.Produtos) {
+                if (pedidos.Produtos.hasOwnProperty(pos)) {
+                  pedidos.Produtos[pos].foto = "http://localhost:3000/imagens/" + pedidos.Produtos[pos].foto;
+                }
+              }
             return res.status(201).json(pedidos)
         } catch (error) {
             return res.status(500).json("Algo errado aconteceu, chame ajuda");
@@ -46,6 +82,7 @@ const PedidoController = {
         var produtoValido = true
         var soma = 0;
         var descontoCupom = 0;
+        var valortotal = 0;
         
 
         for(var i =0; i<listaprodutos.length; i++){
@@ -61,13 +98,21 @@ const PedidoController = {
         if(produtoValido == true){
 
             if(nomeCupom){
-                const { desconto } = await Cupons.findOne({
+                //const { desconto } = await Cupons.findOne({
+                const cupom = await Cupons.findOne({
                     where: {nome: nomeCupom},
                 })
-                descontoCupom = desconto
-                
+                if(cupom.descontoporcentagem == true){
+                    valortotal = soma - soma*cupom.desconto/100
+                }else{
+                    if(cupom.desconto >= soma){
+                        valortotal = 0;
+                    }else{
+                        valortotal = soma - cupom.desconto
+                    }
+                }  
             }
-            const newPedido = await Pedidos.create({usuario_id: usuario.id ,valor:soma-descontoCupom, cupom: nomeCupom})
+            const newPedido = await Pedidos.create({usuario_id: usuario.id ,valor:valortotal, cupom: nomeCupom})
             for(var i=0; i<listaprodutos.length; i++){
                 await DetalhesPedido.create({
                     pedido_id:newPedido.id,

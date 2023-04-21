@@ -15,6 +15,9 @@ const Cupons = db.define(
     desconto: {
         type: DataTypes.FLOAT,
       },
+    descontoporcentagem: {
+        type: DataTypes.BOOLEAN,
+      },
     createdAt: {
       type: DataTypes.DATE,
     },

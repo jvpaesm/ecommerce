@@ -22,7 +22,7 @@ CREATE TABLE `categorias` (
 CREATE TABLE `produtos` (
   `id` int NOT NULL AUTO_INCREMENT,
   `nome` varchar(100) NOT NULL,
-  `foto` varchar(100) NOT NULL,
+  `foto` varchar(300) NOT NULL,
   `preco` float NOT NULL,
   `descricao` varchar(100) NOT NULL,
   `categoria` int NOT NULL,
@@ -38,6 +38,7 @@ CREATE TABLE `cupons` (
   `id` int NOT NULL AUTO_INCREMENT,
   `nome` varchar(45) NOT NULL,
   `desconto` float NOT NULL,
+  `descontoporcentagem` tinyint NOT NULL,
   `createdAt` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `updatedAt` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
